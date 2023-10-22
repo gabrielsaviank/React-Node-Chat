@@ -1,4 +1,5 @@
 import { User } from "../models/User.js";
+import jwt from "jsonwebtoken";
 
 export const getUsers = async(req, res) => {
     try {
@@ -30,7 +31,9 @@ export const createUser = async(req, res) => {
 
         await user.save();
 
-        res.send(user);
+        const token = jwt.sign({ userId: user._id }, "MY_SECRET_KEY");
+
+        res.send({ token });
     } catch (exception) {
         console.log("IXChat Error", exception);
         res.status(500).send("IXChat An error occurred while retrieving data");
