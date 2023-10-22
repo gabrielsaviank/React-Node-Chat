@@ -1,5 +1,4 @@
 import { User } from "../models/User.js";
-import passport from "passport";
 
 export const SeedAdminUser = async () => {
     try {
@@ -23,7 +22,7 @@ export const SeedAdminUser = async () => {
             }
 
             adminUser.save()
-                .then((newUser) => {
+                .then(() => {
                     console.log("IXChat Admin User Created Successfully");
                 })
                 .catch((error) => {
