@@ -73,6 +73,10 @@ export const login = (req, res) => {
 };
 
 export const logout = (req, res) => {
-    req.logout();
-    res.send("IXChat Logout Successfully");
+    req.logout((error) => {
+        if (error) {
+            console.error("Logout error:", error);
+        }
+        res.send("IXChat Logout Successfully");
+    });
 };
