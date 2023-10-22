@@ -1,30 +1,35 @@
-import bcrypt from "bcrypt";
-
 import { User } from "../models/User.js";
+import passport from "passport";
 
-export const SeedAdminUser = async() => {
-    try{
+export const SeedAdminUser = async () => {
+    try {
         const adminUsername = "admin";
-        const adminPassword = "1234";
 
         const checkAdmin = await User.findOne({ username: adminUsername });
 
-        if(checkAdmin) {
-            return console.log("Admin Already Exists skipping creation");
+        if (checkAdmin) {
+            return console.log("Admin Already Exists, skipping creation");
         }
 
-        const hashPassword = await bcrypt.hash(adminPassword, 10);
-
-        const AdminUser = new User({
+        const adminUser = new User({
             username: "admin",
             name: "Admin",
-            password: hashPassword,
             admin: true
         });
 
-        await AdminUser.save();
+        adminUser.setPassword("1234", (err) => {
+            if (err) {
+                return console.log("IXChat Error", err);
+            }
 
-        console.log("IXChat Admin User Created Successfully");
+            adminUser.save()
+                .then((newUser) => {
+                    console.log("IXChat Admin User Created Successfully");
+                })
+                .catch((error) => {
+                    console.log("IXChat Error", error);
+                });
+        });
     } catch (exception) {
         console.error("IXChat Error creating the initial user:", exception);
     }

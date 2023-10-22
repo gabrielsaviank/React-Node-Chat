@@ -11,4 +11,13 @@ const userSchema = new Schema({
 
 userSchema.plugin(passportLocalMongoose);
 
+userSchema.methods.verifyPassword = function (password, callback) {
+    this.constructor.authenticate()(this.username, password, (err, user) => {
+        if (err) {
+            return callback(err);
+        }
+        return callback(null, user !== false);
+    });
+};
+
 export const User = model("User", userSchema);

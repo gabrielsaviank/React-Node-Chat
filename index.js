@@ -11,6 +11,7 @@ import { corsOptions } from "./helpers/CorsOptions.js";
 import { initSocketIO } from "./helpers/Socket.js";
 import { SeedAdminUser } from "./helpers/SeedAdminUser.js";
 import { createServer } from "node:http";
+import "./middlewares/PassportStrategy.js";
 import "./middlewares/PassportConfig.js";
 
 dotenv.config();
