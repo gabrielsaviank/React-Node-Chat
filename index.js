@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 import { userRoutes } from "./routes/UserRoutes.js";
 import { corsOptions } from "./helpers/CorsOptions.js";
@@ -17,6 +18,7 @@ const app = express();
 const server = createServer(app);
 
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 app.use("/users", userRoutes);
 
 try{
