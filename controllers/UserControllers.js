@@ -58,13 +58,20 @@ export const login = async(req, res) => {
 
     try {
         await user.comparePassword(password);
+
         const token = jwt.sign({ userId: user._id }, "MY_SECRET_KEY", {
             expiresIn: 2592000
         });
 
-        res.cookie("token", token, { httpOnly: true });
+        const userData = {
+            username: user.username,
+            name: user.name,
+            admin: user.admin,
+            token: token,
+        };
 
-        res.send(token);
+        res.cookie("token", token, { httpOnly: true });
+        res.json(userData);
     } catch (err) {
         return res.status(422).send({ error: "AlleSys: Error - Invalid username or password" });
     }
