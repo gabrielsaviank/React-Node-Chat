@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 
 import { LoginContainer } from "../components/organisms/LoginContainer";
 import { LoginViewStyle } from "./styles/LoginStyles";
-import { useAuth } from "../context/AuthProvider";
-import history from "../history";
 import { login } from "../ducks/actions/auth-actions";
 
 

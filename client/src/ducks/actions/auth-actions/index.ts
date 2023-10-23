@@ -20,11 +20,7 @@ export const login = ({ username, password }: {
         dispatch({ type: LOGIN, payload: response.data });
         history.push("/home");
     } catch (err) {
-        // dispatch({ type: FAILED_LOGIN, payload: true });
-        // setTimeout(
-        //     () => {
-        //         dispatch({ type: FAILED_LOGIN, payload: false });
-        //     }, 1500);
         console.log("IXChat- ERROR: Couldn't establish connection with database");
     }
 };
+

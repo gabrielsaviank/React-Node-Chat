@@ -22,9 +22,9 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action: ActionType) => {
     switch (action.type) {
         case LOGIN:
-            return { ...state, isSignedIn: true, userId: action.payload };
+            return { isSignedIn: true, user: action.payload };
         case GET_USERS:
-            return { error: action.payload };
+            return { ...state, users: action.payload };
         case LOGOUT:
             return { isSignedIn: null, userId: null };
         case CREATE_USER:
