@@ -1,82 +1,75 @@
-import passport from "passport";
+import jwt from "jsonwebtoken";
 
 import { User } from "../models/User.js";
 
-export const getUsers = (req, res) => {
-    if (req.isAuthenticated()) {
-        User.find()
-            .then((users) => {
-                res.status(200).send(users);
-            })
-            .catch((error) => {
-                console.log("IXChat Error", error);
-                res.status(500).send("IXChat An error occurred while retrieving data");
-            });
-    } else {
-        res.status(401).send("IXChat Error - Unauthorized");
+export const getUsers = async(req, res) => {
+    let users;
+
+    try {
+        users = await User.find({}, "-password");
+    } catch (err) {
+        res.status(422).send("IXChat: Error - Request Failed.");
     }
+
+    res.status(200).json({ users });
 };
 
-export const createUser = (req, res) => {
-    passport.authenticate("local", (err, authUser) => {
-        if (err) {
-            console.log("IXChat Error", err);
-            return res.status(500).send("IXChat An error occurred while retrieving data");
-        }
+export const createUser = async(req, res) => {
+    const { username, name, password, admin } = req.body;
 
-        if (authUser) {
+    let existingUser;
+
+    try {
+        existingUser = await User.findOne({ username: username });
+
+        if(existingUser){
             return res.status(422).send("IXChat Error - User Already exists");
         }
 
-        const { username, name, password, admin } = req.body;
-
-        const user = new User({ username, name, admin });
-
-        user.setPassword(password, (err) => {
-            if (err) {
-                console.log("IXChat Error", err);
-                return res.status(500).send("IXChat An error occurred while saving the user");
-            }
-
-            user.save()
-                .then((newUser) => {
-                    res.send(newUser);
-                })
-                .catch((error) => {
-                    console.log("IXChat Error", error);
-                    res.status(500).send("IXChat An error occurred while saving the user");
-                });
+        const user = new User({
+            username,
+            name,
+            password,
+            admin
         });
-    })(req, res);
+        await user.save();
+
+        const token = jwt.sign({ userId: user._id }, "MY_SECRET_KEY");
+
+        res.send({ token });
+    } catch (exception) {
+        console.log("IXChat Error", exception);
+        res.status(500).send("IXChat An error occurred while retrieving data");
+    }
 };
 
-export const login = (req, res) => {
-    passport.authenticate("local", (error, user) => {
-        if (error) {
-            console.log("IXChat Error", error);
-            return res.status(500).send("IXChat An error occurred while retrieving data");
-        }
+export const login = async(req, res) => {
+    const { username, password } = req.body;
 
-        if (!user) {
-            return res.status(401).send("IXChat Error - Unauthorized");
-        }
+    const user = await User.findOne({ username });
 
-        req.logIn(user, (error) => {
-            if (error) {
-                console.log("IXChat Error", error);
-                return res.status(500).send("IXChat An error occurred while retrieving data");
-            }
+    if (!username || !password) {
+        return res.status(422).send({ error: "IXChat: Error - You must provide email and password" });
+    }
 
-            res.send({ user });
+    if (!user) {
+        return res.status(422).send({ error: "IXChat: Error - Invalid username or password" });
+    }
+
+    try {
+        await user.comparePassword(password);
+        const token = jwt.sign({ userId: user._id }, "MY_SECRET_KEY", {
+            expiresIn: 2592000
         });
-    })(req, res);
+
+        res.cookie("token", token, { httpOnly: true });
+
+        res.send(token);
+    } catch (err) {
+        return res.status(422).send({ error: "AlleSys: Error - Invalid username or password" });
+    }
 };
 
-export const logout = (req, res) => {
-    req.logout((error) => {
-        if (error) {
-            console.error("Logout error:", error);
-        }
-        res.send("IXChat Logout Successfully");
-    });
+export const logout = async(req, res) => {
+
 };
