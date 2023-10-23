@@ -1,14 +1,16 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Chat from "./components/organisms/Chat";
+import Login from "./views/Login";
 
-function App() {
-  return (
-    <div>
-      <h1>Hello</h1>
-        <Chat/>
-    </div>
-  );
-}
+const App = () => {
+    return(
+        <Router>
+            <Routes>
+                <Route path="/" element={<Login/>} />
+            </Routes>
+        </Router>
+    );
+};
 
 export default App;
