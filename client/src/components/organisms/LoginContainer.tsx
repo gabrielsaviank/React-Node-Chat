@@ -8,16 +8,12 @@ import { BaseButton } from "../atoms/BaseButton";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
-export const LoginContainer = ({ onLogin, isLoading }) => {
+export const LoginContainer = ({ onLogin }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const handleLogin = async () => {
-        if (isLoading) {
-            return;
-        }
-
-        await onLogin(username, password);
+        onLogin(username, password);
     };
 
 

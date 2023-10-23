@@ -1,24 +1,18 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
+import { connect } from "react-redux";
 
 import { LoginContainer } from "../components/organisms/LoginContainer";
 import { LoginViewStyle } from "./styles/LoginStyles";
 import { useAuth } from "../context/AuthProvider";
 import history from "../history";
+import { login } from "../ducks/actions/auth-actions";
 
-export type AuthContextType = {
-    login: (username: string, password: string) => Promise<void>,
-    isLoading: boolean
-}
 
-const Login = () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const { login, isLoading }: AuthContextType = useAuth();
+const Login = (state: any) => {
 
-    const handleLogin = async(username: string, password: string) => {
-        await login(username, password);
-        history.push("/home");
+    const handleLogin = (username: string, password: string) => {
+        state.login({ username, password });
     };
 
     return(
@@ -29,9 +23,13 @@ const Login = () => {
             >
                 IXChat
             </Typography>
-            <LoginContainer onLogin={handleLogin} isLoading={isLoading}/>
+            <LoginContainer onLogin={handleLogin}/>
         </div>
     );
 };
 
-export default Login;
+const mapStateToProps = (state: any) => {
+    return {};
+};
+
+export default connect(mapStateToProps, { login })(Login);
