@@ -67,7 +67,7 @@ export const login = (req, res) => {
                 return res.status(500).send("IXChat An error occurred while retrieving data");
             }
 
-            res.send({ userId: user._id });
+            res.send({ user });
         });
     })(req, res);
 };

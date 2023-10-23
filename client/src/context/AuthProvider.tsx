@@ -21,7 +21,6 @@ export const AuthProvider = ({ children }) => {
 
             const userData = response.data;
 
-
             setUser(userData);
 
             setIsLoading(false);

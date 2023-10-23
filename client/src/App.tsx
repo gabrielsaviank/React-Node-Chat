@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Router, Switch } from "react-router-dom";
 
-
 import Login from "./views/Login";
 import Home from "./views/Home";
 import history from "./history";
@@ -12,8 +11,8 @@ const App = () => {
     return (
         <Router history={history}>
             <AuthProvider>
-                <Route path="/" exact component={Login}/>
                 <Switch>
+                    <Route path="/" exact component={Login}/>
                     <PrivateRoute>
                         <Route path="/home" exact component={Home} />
                     </PrivateRoute>

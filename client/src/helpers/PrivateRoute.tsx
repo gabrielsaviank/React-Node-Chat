@@ -7,9 +7,11 @@ import { useAuth } from "../context/AuthProvider";
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
 const PrivateRoute = ({ children }) => {
-    const user = useAuth();
+    const auth = useAuth();
 
-    if(!user){
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if(!auth.user) {
         return <Redirect to="/"/>;
     }
 
