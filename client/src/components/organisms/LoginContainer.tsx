@@ -5,14 +5,21 @@ import { BaseInput } from "../molecules/BaseInput";
 import { BaseButton } from "../atoms/BaseButton";
 
 
-export const LoginContainer = () => {
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line react/prop-types
+export const LoginContainer = ({ onLogin, isLoading }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = () => {
-        console.log(username);
-        console.log(password);
+    const handleLogin = async () => {
+        if (isLoading) {
+            return;
+        }
+
+        await onLogin(username, password);
     };
+
 
     return (
         <Box
