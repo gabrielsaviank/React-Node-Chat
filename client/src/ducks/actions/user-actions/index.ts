@@ -12,8 +12,6 @@ export const getUsers = (token: string) => async (dispatch: ({ type, payload }: 
             },
         });
 
-        console.log(response);
-
         dispatch({ type: GET_USERS, payload: response.data.users });
     } catch (err) {
         console.log("IXChat- ERROR: Couldn't establish connection with database");

@@ -8,7 +8,6 @@ import { login } from "../ducks/actions/auth-actions";
 
 
 const Login = (state: any) => {
-
     const handleLogin = (username: string, password: string) => {
         state.login({ username, password });
     };
