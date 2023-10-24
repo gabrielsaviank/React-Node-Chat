@@ -1,5 +1,7 @@
 import { Server } from "socket.io";
 
+import { Message } from "../models/Message.js";
+
 export const initSocketIO = (server) => {
     const io = new Server(server, {
         cors: {
@@ -18,9 +20,21 @@ export const initSocketIO = (server) => {
 
         socket.on("chat message", (msg) => {
             console.log(msg);
-            io.to(msg.sender).emit("chat message", msg);
-            io.to(msg.receiver).emit("chat message", msg);
-            console.log(msg);
+
+            const newMessage = new Message({
+               sender: msg.sender,
+               receiver: msg.receiver,
+               text: msg.text
+            });
+
+            newMessage.save()
+                .then((savedMessage) => {
+                    io.to(msg.sender).emit("chat message", savedMessage);
+                    io.to(msg.receiver).emit("chat message", savedMessage);
+                }).catch((error) => {
+                console.error("IXChat - Error saving the message to MongoDB:", error);
+            });
+
         });
 
         socket.on("disconnect", () => {
