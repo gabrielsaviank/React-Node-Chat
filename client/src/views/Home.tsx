@@ -38,6 +38,7 @@ const Home = ({ user, users, getUsers }: HomeStateType) => {
     }, [user, getUsers]);
 
     const currentUser = user.name;
+
     const userList = useMemo(() => {
         return users.users.map((user: UserType) => (
             <ListItem key={user._id}>

@@ -6,6 +6,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { connect } from "react-redux";
+import Box from "@mui/material/Box";
 
 import { getMessages } from "../../ducks/actions/message-actions";
 import history from "../../history";
@@ -91,35 +92,46 @@ const ChatContainer = ({
     }, [messages]);
 
     return (
-        <div>
-            <List>
-                {messagesList}
-            </List>
-            <TextField
-                type="text"
-                label="Type a message"
-                variant="outlined"
-                fullWidth
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-            />
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSendMessage}
-                style={{ marginTop: "10px" }}
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Box
+                style={{ width: "70%" }}
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
             >
-                Send
-            </Button>
+                <List>
+                    {messagesList}
+                </List>
+                <TextField
+                    type="text"
+                    label="Type a message"
+                    variant="outlined"
+                    fullWidth
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                />
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleSendMessage}
+                        style={{ width: "150px", margin: "12px 10px 0" }}
+                        size={"medium"}
+                    >
+                        Send
+                    </Button>
 
-            <Button
-                variant="contained"
-                color="warning"
-                onClick={() => history.push("/home")}
-                style={{ marginTop: "10px" }}
-            >
-                Back
-            </Button>
+                    <Button
+                        variant="contained"
+                        color="warning"
+                        onClick={() => history.push("/home")}
+                        style={{ width: "150px", margin: "12px 10px 0" }}
+
+                    >
+                        Back
+                    </Button>
+                </div>
+            </Box>
         </div>
     );
 };
