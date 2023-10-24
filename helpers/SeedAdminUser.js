@@ -11,15 +11,24 @@ export const SeedAdminUser = async () => {
         }
 
         const adminUser = new User({
-            username: "admin_ixchat",
+            username: "admin",
             name: "Admin",
-            password: "1234",
             admin: true
         });
 
-        await adminUser.save();
+        adminUser.setPassword("1234", (err) => {
+            if (err) {
+                return console.log("IXChat Error", err);
+            }
 
-        console.log("Admin User Created");
+            adminUser.save()
+                .then(() => {
+                    console.log("IXChat Admin User Created Successfully");
+                })
+                .catch((error) => {
+                    console.log("IXChat Error", error);
+                });
+        });
     } catch (exception) {
         console.error("IXChat Error creating the initial user:", exception);
     }
