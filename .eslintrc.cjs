@@ -1,34 +1,39 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "es2021": true,
-        "node": true,
+    env: {
+        browser: true,
+        es2021: true,
+        node: true,
     },
-    "extends": "eslint:recommended",
-    "overrides": [
+    extends: ["eslint:recommended"],
+    overrides: [
         {
-            "env": {
-                "node": true
+            files: ["**/*.test.js", "**/*.test.ts"], // Include test files
+            extends: ["plugin:jest/recommended"], // Extend Jest configuration
+            env: {
+                jest: true,
             },
-            "globals": {
-                "process": true,
+        },
+        {
+            env: {
+                node: true,
             },
-            "files": [
-                ".eslintrc.{js,cjs}",
-            ],
-            "parserOptions": {
-                "sourceType": "script"
-            }
-        }
+            globals: {
+                process: true,
+            },
+            files: [".eslintrc.{js,cjs}"],
+            parserOptions: {
+                sourceType: "script",
+            },
+        },
     ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+    parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
     },
-    "rules": {
+    rules: {
         semi: [2, "always"],
-        "quotes": [2, "double", { "avoidEscape": true }],
+        quotes: [2, "double", { avoidEscape: true }],
         "object-curly-spacing": ["error", "always"],
-        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1 }]
-    }
-}
+        "no-multiple-empty-lines": ["error", { max: 2, maxEOF: 1 }],
+    },
+};
