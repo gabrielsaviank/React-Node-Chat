@@ -7,11 +7,10 @@ export const getUsers = async(req, res) => {
 
     try {
         users = await User.find({}, "-password");
+        res.status(200).json({ users });
     } catch (err) {
         res.status(422).send("IXChat: Error - Request Failed.");
     }
-
-    res.status(200).json({ users });
 };
 
 export const createUser = async(req, res) => {
@@ -68,6 +67,7 @@ export const login = async(req, res) => {
             name: user.name,
             admin: user.admin,
             token: token,
+            _id: user._id
         };
 
         res.cookie("token", token, { httpOnly: true });

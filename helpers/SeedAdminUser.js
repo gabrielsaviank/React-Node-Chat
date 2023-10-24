@@ -11,7 +11,7 @@ export const SeedAdminUser = async () => {
         }
 
         const adminUser = new User({
-            username: "admin",
+            username: "admin_ixchat",
             name: "Admin",
             password: "1234",
             admin: true

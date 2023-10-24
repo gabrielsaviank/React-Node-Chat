@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
-// import session from "express-session";
 
 import { userRoutes } from "./routes/UserRoutes.js";
+import { messageRoutes } from "./routes/MessageRoutes.js";
 import { corsOptions } from "./helpers/CorsOptions.js";
 import { initSocketIO } from "./helpers/Socket.js";
 import { SeedAdminUser } from "./helpers/SeedAdminUser.js";
@@ -24,6 +24,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 app.use("/users", userRoutes);
+app.use("/messages", messageRoutes);
 
 try{
     mongoose.connect(DB_URI), {
