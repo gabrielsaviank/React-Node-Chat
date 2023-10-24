@@ -37,3 +37,8 @@ _yarn back_
 _cd client && yarn start_
 
 OBS: O backend roda na porta 5000 e o front na padrao 3000 do React.
+
+### PR Com Auth Passport.js
+[Here](https://github.com/GabrielAccessmentSources/IXChat/pull/7)
+
+As rotas e autenticacao e para estar funcionando porem somente por CURL ou Insomnia/Postman
