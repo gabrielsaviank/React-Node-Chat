@@ -16,6 +16,9 @@ export const getUserMessages = async(req, res) => {
             {
                 $sort: { createdAt: 1 },
             },
+            {
+                $limit: 10
+            }
         ]);
 
         res.status(200).send({ messages });

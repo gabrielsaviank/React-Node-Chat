@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Typography } from "@mui/material";
 
-import { ChatContainer } from "../components/organisms/ChatContainer";
+import ChatContainer from "../components/organisms/ChatContainer";
 
 const Chat = (state: any) => {
     const { user, match } = state;
@@ -17,6 +17,7 @@ const Chat = (state: any) => {
                 sender={user._id}
                 receiver={userId}
                 receiverName={receiverName}
+                userToken={user.token}
             />
         </div>
     );

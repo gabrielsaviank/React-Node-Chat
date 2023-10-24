@@ -1,12 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import io from "socket.io-client";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { connect } from "react-redux";
+
+import { getMessages } from "../../ducks/actions/message-actions";
 
 const socket = io("http://localhost:5000");
+
+type MessagePropsType = {
+    senderName: string;
+    text?: string;
+    sender: string;
+    receiver: string;
+    receiverName: string;
+    getMessages: any;
+    userToken: string;
+    fetchedMessages?: any;
+}
 
 type MessageType = {
     senderName: string;
@@ -16,11 +30,21 @@ type MessageType = {
     receiverName: string;
 }
 
-export const ChatContainer = ({ sender, receiver, senderName, receiverName }: MessageType) => {
+const ChatContainer = ({
+   sender,
+   receiver,
+   senderName,
+   receiverName,
+   getMessages,
+   userToken,
+   fetchedMessages,
+}: MessagePropsType) => {
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState<MessageType[]>([]);
+    const [messages, setMessages] = useState<MessageType[]>( fetchedMessages.messages || []);
 
     useEffect(() => {
+        getMessages({ userToken, senderId: sender, receiverId: receiver });
+
         socket.emit("join room", receiver);
 
         socket.on("chat message", (msg) => {
@@ -33,6 +57,12 @@ export const ChatContainer = ({ sender, receiver, senderName, receiverName }: Me
             socket.emit("leave room", receiver);
         };
     }, [receiver]);
+
+    useEffect(() => {
+        if (fetchedMessages) {
+            setMessages(fetchedMessages.messages || []);
+        }
+    }, [fetchedMessages]);
 
     const handleSendMessage = () => {
         if (message) {
@@ -51,15 +81,18 @@ export const ChatContainer = ({ sender, receiver, senderName, receiverName }: Me
         }
     };
 
-    console.log(messages);
+    const messagesList = useMemo(() => {
+        return messages.map((msg, index) => (
+            <ListItem key={index}>
+                <ListItemText primary={msg.senderName || "Anon"} secondary={msg.text} />
+            </ListItem>
+        ));
+    }, [messages]);
+
     return (
         <div>
             <List>
-                {messages.map((msg, index) => (
-                    <ListItem key={index}>
-                        <ListItemText primary={msg.senderName || "Anon"} secondary={msg.text} />
-                    </ListItem>
-                ))}
+                {messagesList}
             </List>
             <TextField
                 type="text"
@@ -80,4 +113,15 @@ export const ChatContainer = ({ sender, receiver, senderName, receiverName }: Me
         </div>
     );
 };
+
+const mapStateToProps = (state: { messages: [] }) => {
+    return {
+        fetchedMessages: state.messages
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    { getMessages }
+)(ChatContainer);
 

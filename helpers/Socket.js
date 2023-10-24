@@ -25,6 +25,7 @@ export const initSocketIO = (server) => {
                 sender: msg.sender,
                 receiver: msg.receiver,
                 text: msg.text,
+                senderName: msg.senderName
             });
 
 
