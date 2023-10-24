@@ -2,7 +2,7 @@ import { User } from "../models/User.js";
 
 export const SeedAdminUser = async () => {
     try {
-        const adminUsername = "admin";
+        const adminUsername = "admin_ixchat";
 
         const checkAdmin = await User.findOne({ username: adminUsername });
 
@@ -11,7 +11,7 @@ export const SeedAdminUser = async () => {
         }
 
         const adminUser = new User({
-            username: "admin_ixchat",
+            username: adminUsername,
             name: "Admin",
             password: "1234",
             admin: true
