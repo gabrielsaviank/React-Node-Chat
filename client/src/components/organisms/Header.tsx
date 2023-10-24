@@ -6,18 +6,20 @@ import Button from "@mui/material/Button";
 import history from "../../history";
 import TelegramIcon from "@mui/icons-material/Telegram";
 
-export const Header = () => {
+export const Header = ({ isAdmin }: {isAdmin?: boolean}) => {
     return (
-        <AppBar position="static">
+        <AppBar position="static" style={{ marginBottom: 20 }}>
             <Toolbar style={{ justifyContent: "space-between" }}>
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <TelegramIcon />
                     <Typography variant="h6">IXChat</Typography>
                 </div>
                 <div>
-                    <Button color="inherit" onClick={() => history.push("/home")}>
-                        Create User
-                    </Button>
+                    {isAdmin && (
+                        <Button color="inherit" onClick={() => history.push("/register")}>
+                            Create User
+                        </Button>
+                    )}
                     <Button
                         color="inherit"
                         onClick={() => history.push("/home")}

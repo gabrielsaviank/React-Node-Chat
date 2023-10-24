@@ -5,6 +5,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Typography } from "@mui/material";
 import ChatIcon from "@mui/icons-material/Chat";
+import Box from "@mui/material/Box";
 
 import history from "../history";
 import { getUsers } from "../ducks/actions/user-actions";
@@ -15,6 +16,7 @@ export type UserType = {
     username: string;
     name: string;
     token: string
+    admin?: boolean
 }
 
 type users = {
@@ -28,6 +30,7 @@ type HomeStateType = {
 }
 
 const Home = ({ user, users, getUsers }: HomeStateType) => {
+
     useEffect(() => {
         if (user && user.token) {
             getUsers(user.token);
@@ -51,13 +54,20 @@ const Home = ({ user, users, getUsers }: HomeStateType) => {
     }, [users.users]);
 
     return(
-        <>
-            <Header />
-            <Typography variant="h4">IXChat Home</Typography>
-            <List>
-                {userList}
-            </List>
-        </>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Header isAdmin={user.admin}/>
+            <Box
+                style={{ width: "70%" }}
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+            >
+                <Typography variant="h4">IXChat Home</Typography>
+                <List>
+                    {userList}
+                </List>
+            </Box>
+        </div>
     );
 };
 

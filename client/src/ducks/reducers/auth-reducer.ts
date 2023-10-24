@@ -28,7 +28,7 @@ export default (state = INITIAL_STATE, action: ActionType) => {
         case LOGOUT:
             return { isSignedIn: null, userId: null };
         case CREATE_USER:
-            return action.payload;
+            return { ...state };
         default:
             return state;
     }
