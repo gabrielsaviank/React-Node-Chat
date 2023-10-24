@@ -3,13 +3,16 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
+import passport from "passport";
+import session from "express-session";
 
 import { userRoutes } from "./routes/UserRoutes.js";
-import { messageRoutes } from "./routes/MessageRoutes.js";
 import { corsOptions } from "./helpers/CorsOptions.js";
 import { initSocketIO } from "./helpers/Socket.js";
 import { SeedAdminUser } from "./helpers/SeedAdminUser.js";
 import { createServer } from "node:http";
+import "./middlewares/PassportStrategy.js";
+import "./middlewares/PassportConfig.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -18,13 +21,22 @@ const DB_URI = process.env.DATABASE_URL || "MY_DB_URI";
 
 const app = express();
 
+app.use(
+    session({
+        secret: "your_secret_key",
+        resave: false,
+        saveUninitialized: false,
+    })
+);
 const server = createServer(app);
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use("/users", userRoutes);
-app.use("/messages", messageRoutes);
 
 try{
     mongoose.connect(DB_URI), {
