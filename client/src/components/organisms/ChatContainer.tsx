@@ -57,7 +57,7 @@ export const ChatContainer = ({ sender, receiver, senderName, receiverName }: Me
             <List>
                 {messages.map((msg, index) => (
                     <ListItem key={index}>
-                        <ListItemText primary={msg.senderName ? msg.senderName : "Anon"} secondary={msg.text} />
+                        <ListItemText primary={msg.senderName || "Anon"} secondary={msg.text} />
                     </ListItem>
                 ))}
             </List>
