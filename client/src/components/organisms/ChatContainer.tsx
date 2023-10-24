@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 
 import { getMessages } from "../../ducks/actions/message-actions";
 import history from "../../history";
+import { showNotification } from "../../helpers/ShowNotification";
 
 const socket = io("http://localhost:5000");
 
@@ -50,8 +51,10 @@ const ChatContainer = ({
         socket.emit("join room", receiver);
 
         socket.on("chat message", (msg) => {
+            console.log(msg);
             if (msg.sender !== sender) {
                 setMessages((prevMessages) => [...prevMessages, msg]);
+                showNotification(msg.senderName, msg.text);
             }
         });
 
@@ -86,7 +89,10 @@ const ChatContainer = ({
     const messagesList = useMemo(() => {
         return messages.map((msg, index) => (
             <ListItem key={index}>
-                <ListItemText primary={msg.senderName || "Anon"} secondary={msg.text} />
+                <ListItemText
+                    primary={msg.senderName || "Anon"}
+                    secondary={msg.text}
+                />
             </ListItem>
         ));
     }, [messages]);
