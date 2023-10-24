@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { Typography } from "@mui/material";
+import ChatIcon from "@mui/icons-material/Chat";
 
 import history from "../history";
 import { getUsers } from "../ducks/actions/user-actions";
+import { Header } from "../components/organisms/Header";
 
 export type UserType = {
     _id: string;
@@ -32,21 +34,30 @@ const Home = ({ user, users, getUsers }: HomeStateType) => {
         }
     }, [user, getUsers]);
 
+    const currentUser = user.name;
+    const userList = useMemo(() => {
+        return users.users.map((user: UserType) => (
+            <ListItem key={user._id}>
+                <ListItemText
+                    primary={user.name === currentUser ? `${user.name} (You)` : user.name}
+                    secondary={user.username}
+                    onClick={() =>
+                        history.push(`/chat/${user._id}/${encodeURIComponent(user.name)}`)
+                    }
+                />
+                <ChatIcon />
+            </ListItem>
+        ));
+    }, [users.users]);
+
     return(
-        <div>
+        <>
+            <Header />
             <Typography variant="h4">IXChat Home</Typography>
             <List>
-                {users.users.map((user: UserType) => (
-                    <ListItem key={user._id}>
-                        <ListItemText
-                            primary={user.name}
-                            secondary={user.username}
-                            onClick={() => history.push(`/chat/${user._id}/${encodeURIComponent(user.name)}`)}
-                        />
-                    </ListItem>
-                ))}
+                {userList}
             </List>
-        </div>
+        </>
     );
 };
 

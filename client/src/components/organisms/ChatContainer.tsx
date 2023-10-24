@@ -8,6 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { connect } from "react-redux";
 
 import { getMessages } from "../../ducks/actions/message-actions";
+import history from "../../history";
 
 const socket = io("http://localhost:5000");
 
@@ -109,6 +110,15 @@ const ChatContainer = ({
                 style={{ marginTop: "10px" }}
             >
                 Send
+            </Button>
+
+            <Button
+                variant="contained"
+                color="warning"
+                onClick={() => history.push("/home")}
+                style={{ marginTop: "10px" }}
+            >
+                Back
             </Button>
         </div>
     );
