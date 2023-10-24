@@ -30,7 +30,6 @@ type HomeStateType = {
 }
 
 const Home = ({ user, users, getUsers }: HomeStateType) => {
-
     useEffect(() => {
         if (user && user.token) {
             getUsers(user.token);

@@ -14,15 +14,25 @@ import { showNotification } from "../../helpers/ShowNotification";
 
 const socket = io("http://localhost:5000");
 
+type GetMessagesType = {
+    userToken: string,
+    senderId: string,
+    receiverId: string
+}
+
+type FetchedMessagesType = {
+    messages: MessageType[]
+}
+
 type MessagePropsType = {
     senderName: string;
     text?: string;
     sender: string;
     receiver: string;
     receiverName: string;
-    getMessages: any;
+    getMessages: (params: GetMessagesType) => void;
     userToken: string;
-    fetchedMessages?: any;
+    fetchedMessages?: FetchedMessagesType | any;
 }
 
 type MessageType = {
@@ -43,7 +53,8 @@ const ChatContainer = ({
    fetchedMessages,
 }: MessagePropsType) => {
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState<MessageType[]>( fetchedMessages.messages || []);
+    const [messages, setMessages] =
+        useState<MessageType[]>( fetchedMessages?.messages || []);
 
     useEffect(() => {
         getMessages({ userToken, senderId: sender, receiverId: receiver });
@@ -51,7 +62,6 @@ const ChatContainer = ({
         socket.emit("join room", receiver);
 
         socket.on("chat message", (msg) => {
-            console.log(msg);
             if (msg.sender !== sender) {
                 setMessages((prevMessages) => [...prevMessages, msg]);
                 showNotification(msg.senderName, msg.text);

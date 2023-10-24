@@ -4,7 +4,6 @@ import { GET_USERS } from "../../types";
 export const getUsers = (token: string) => async (dispatch: ({ type, payload }: {
     type: string,
     payload: unknown }) => void) => {
-
     try {
         const response = await Api.get("/users", {
             headers: {

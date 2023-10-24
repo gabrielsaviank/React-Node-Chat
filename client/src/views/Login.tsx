@@ -7,7 +7,15 @@ import { LoginViewStyle } from "./styles/LoginStyles";
 import { login } from "../ducks/actions/auth-actions";
 
 
-const Login = (state: any) => {
+type LoginType = {
+    username: string;
+    password: string;
+}
+type LoginPropsType = {
+    login: (params: LoginType) => void
+}
+const Login = (state: LoginPropsType) => {
+
     const handleLogin = (username: string, password: string) => {
         state.login({ username, password });
     };
@@ -24,9 +32,7 @@ const Login = (state: any) => {
         </div>
     );
 };
-
-const mapStateToProps = (state: any) => {
-    return {};
-};
-
-export default connect(mapStateToProps, { login })(Login);
+export default connect(
+    null,
+    { login }
+)(Login);
