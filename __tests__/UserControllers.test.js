@@ -19,18 +19,4 @@ describe("getUsers controller", () => {
         //
         // done();
     });
-
-    // it("should return an error message on failure", async (done) => {
-    //     // Mock User.find to simulate an error
-    //     jest.spyOn(User, "find").mockImplementation(() => {
-    //         throw new Error("Database error");
-    //     });
-    //
-    //     const response = await request(app).get("/getUsers");
-    //
-    //     expect(response.statusCode).toBe(422);
-    //     expect(response.text).toBe("IXChat: Error - Request Failed");
-    //
-    //     done();
-    // });
 });
