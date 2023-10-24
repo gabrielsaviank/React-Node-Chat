@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Typography } from "@mui/material";
 
 import ChatContainer from "../components/organisms/ChatContainer";
-import { Header } from "../components/organisms/Header";
+import Header from "../components/organisms/Header";
 
 const Chat = (state: any) => {
     const { user, match } = state;
@@ -12,7 +12,7 @@ const Chat = (state: any) => {
     return(
         <div>
             <Header/>
-            <Typography variant="h4">Chatting with {receiverName}</Typography>
+            <Typography variant="h4">Chat with {receiverName}</Typography>
 
             <ChatContainer
                 senderName={user.name}

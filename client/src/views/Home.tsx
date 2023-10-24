@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 
 import history from "../history";
 import { getUsers } from "../ducks/actions/user-actions";
-import { Header } from "../components/organisms/Header";
+import Header from "../components/organisms/Header";
 
 export type UserType = {
     _id: string;

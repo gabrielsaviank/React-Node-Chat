@@ -9,7 +9,11 @@ import Register from "./views/Register";
 import history from "./history";
 import PrivateRoute from "./helpers/PrivateRoute";
 
-const App = (props: any) => {
+type AppType = {
+    isSignedIn: false;
+}
+
+const App = (props: AppType) => {
     return (
         <Router history={history}>
             <Switch>

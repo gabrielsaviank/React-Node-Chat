@@ -7,7 +7,7 @@ import { Typography } from "@mui/material";
 
 import { BaseButton } from "../components/atoms/BaseButton";
 import { BaseInput }  from "../components/molecules/BaseInput";
-import { Header } from "../components/organisms/Header";
+import Header from "../components/organisms/Header";
 import { createUser } from "../ducks/actions/auth-actions";
 import history from "../history";
 

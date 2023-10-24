@@ -76,7 +76,3 @@ export const login = async(req, res) => {
         return res.status(422).send({ error: "AlleSys: Error - Invalid username or password" });
     }
 };
-
-export const logout = async(req, res) => {
-
-};
