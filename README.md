@@ -38,7 +38,9 @@ _cd client && yarn start_
 
 OBS: O backend roda na porta 5000 e o front na padrao 3000 do React.
 
-A aplicacao ja cria um usuario administrador por padrao.
+A aplicacao ja cria um usuario administrador por padrao com 
+ - usuario: admin_ixchat
+ - senha: 1234
 
 ### PR Com Auth Passport.js
 [Here](https://github.com/GabrielAccessmentSources/IXChat/pull/7)
