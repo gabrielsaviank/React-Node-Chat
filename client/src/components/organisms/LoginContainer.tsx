@@ -16,7 +16,6 @@ export const LoginContainer = ({ onLogin }) => {
         onLogin(username, password);
     };
 
-
     return (
         <Box
             display="flex"

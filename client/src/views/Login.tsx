@@ -15,7 +15,6 @@ type LoginPropsType = {
     login: (params: LoginType) => void
 }
 const Login = (state: LoginPropsType) => {
-
     const handleLogin = (username: string, password: string) => {
         state.login({ username, password });
     };

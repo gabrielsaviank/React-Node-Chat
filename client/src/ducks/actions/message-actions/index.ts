@@ -1,12 +1,12 @@
 import Api from "../../../api/Api";
 import { GET_MESSAGES } from "../../types";
 
-
 type GetMessagesActionType = {
     userToken: string;
     senderId: string;
     receiverId: string;
 }
+
 export const getMessages = ({ userToken, senderId, receiverId }: GetMessagesActionType) => async (dispatch: ({ type, payload }: {
     type: string,
     payload: unknown }) => void) => {

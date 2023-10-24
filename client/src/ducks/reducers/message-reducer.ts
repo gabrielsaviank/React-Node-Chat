@@ -1,6 +1,5 @@
 import { GET_MESSAGES } from "../types";
 
-
 type ActionType = {
     type: string;
     payload: { id: string }
