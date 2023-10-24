@@ -3,10 +3,24 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import history from "../../history";
 import TelegramIcon from "@mui/icons-material/Telegram";
+import { connect } from "react-redux";
 
-export const Header = ({ isAdmin }: {isAdmin?: boolean}) => {
+import { logout } from "../../ducks/actions/auth-actions";
+import history from "../../history";
+
+
+type HeaderType = {
+    isAdmin?: boolean;
+    logout: () => void;
+}
+
+const Header = ({ isAdmin, logout }: HeaderType) => {
+    const logMeOut = () => {
+        logout();
+        history.push("/");
+    };
+
     return (
         <AppBar position="static" style={{ marginBottom: 20 }}>
             <Toolbar style={{ justifyContent: "space-between" }}>
@@ -22,7 +36,7 @@ export const Header = ({ isAdmin }: {isAdmin?: boolean}) => {
                     )}
                     <Button
                         color="inherit"
-                        onClick={() => history.push("/home")}
+                        onClick={() => logMeOut()}
                         style={{ marginLeft: 20 }}
                     >
                         Logout
@@ -32,3 +46,8 @@ export const Header = ({ isAdmin }: {isAdmin?: boolean}) => {
         </AppBar>
     );
 };
+
+export default connect(
+    null,
+    { logout }
+)(Header);
