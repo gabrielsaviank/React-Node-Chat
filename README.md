@@ -2,7 +2,7 @@
 
 This is a SocketIo application using Node.js, Mongo, JWT, React and Redux. 
 
-## Steps (Passos)
+## Steps
 
 - Clone: 
 
